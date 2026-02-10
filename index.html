@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تذكيرات إيمانية | Faithful Reminders</title>
+    <title>Portal</title>
     <style>
         body {
             font-family: "Arial", "Traditional Arabic", sans-serif;
@@ -231,147 +231,9 @@
         </div>
     </div>
 
-    <h1>تذكيرات إيمانية | Faithful Reminders</h1>
-    <p class="greeting">السلام عليكم ورحمة الله وبركاته</p>
+    <h1>Welcome</h1>
     <hr>
-
-    <div class="tabs-container">
-        <div class="tabs-nav">
-            <button class="tab-button active" onclick="switchTab('khalid')">
-                الشيخ خالد الراشد
-            </button>
-            <button class="tab-button" onclick="switchTab('speaker2')">
-                الشيخ نايف الصحفي و الشيخ منصور السالمي
-            </button>
-            <button class="tab-button" onclick="switchTab('speaker3')">
-                متحدث آخر
-            </button>
-        </div>
-    </div>
-    
-
-    <!-- Tab 1: Sheikh Khalid Al-Rashid -->
-    <div id="tab-khalid" class="tab-content active">
-        <div class="remindertitle">
-            <h3>الشيخ خالد بن محمد بن حمد الراشد</h3>
-        </div>
-
-        <h2 class="section-title">📻 التذكيرات الصوتية</h2>
-
-        <div class="reminder">
-            <h2>يوم الحسرة</h2>
-            <audio controls preload="metadata">
-                <source src="audios/يوم الحسرة.mp3" type="audio/mpeg">
-                المتصفح لا يدعم تشغيل الصوت.
-            </audio>
-        </div>
-
-        <div class="reminder">
-            <h2>مراقبة نفسك</h2>
-            <audio controls preload="metadata">
-                <source src="audios/مراقبة نفسك.mp3" type="audio/mpeg">
-                المتصفح لا يدعم تشغيل الصوت.
-            </audio>
-        </div> 
-
-        <h2 class="section-title">🎥 التذكيرات المرئية</h2>
-
-        <div class="row">
-            <div class="videoreminder">
-                <h2>باب التوبة</h2>
-                <video controls preload="metadata">
-                    <source src="videos/babattawbah.mp4" type="video/mp4">
-                    المتصفح لا يدعم تشغيل الفيديو.
-                </video>
-            </div>
-
-            <div class="videoreminder">
-                <h2>أنا لا ألتزم لأنني مررت بتجربة سيئة</h2>
-                <video controls preload="metadata">
-                    <source src="videos/nopractice.mp4" type="video/mp4">
-                    المتصفح لا يدعم تشغيل الفيديو.
-                </video>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="videoreminder">
-                <h2>عمر رضي الله عنه يزور أبا الدرداء رضي الله عنه</h2>
-                <video controls preload="metadata">
-                    <source src="videos/umarabidarda.mp4" type="video/mp4">
-                    المتصفح لا يدعم تشغيل الفيديو.
-                </video>
-            </div>
-
-            <div class="videoreminder">
-                <h2>امرأة تتصل بالشيخ خالد (فك الله أسره)</h2>
-                <video controls preload="metadata">
-                    <source src="videos/womancalls.mp4" type="video/mp4">
-                    المتصفح لا يدعم تشغيل الفيديو.
-                </video>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tab 2: Speaker 2 (Empty placeholder) -->
-    <div id="tab-speaker2" class="tab-content">
-        <div class="remindertitle">
-            <h3>الشيخ نايف الصحفي و الشيخ منصور السالمي</h3>
-        </div>
-
-        <h2 class="section-title">🎥 التذكيرات المرئية</h2>
-        
-        <div class="empty-state">
-            <p>🎙️</p>
-            <p>سيتم إضافة محتوى هذا المتحدث قريباً</p>
-            <p>بإذن الله تعالى</p>
-        </div>
-    </div>
-
-    <!-- Tab 3: Speaker 3 (Empty placeholder) -->
-    <div id="tab-speaker3" class="tab-content">
-        <div class="remindertitle">
-            <h3>متحدث ثالث - قريباً إن شاء الله</h3>
-        </div>
-        
-        <div class="empty-state">
-            <p>🎙️</p>
-            <p>سيتم إضافة محتوى هذا المتحدث قريباً</p>
-            <p>بإذن الله تعالى</p>
-        </div>
-    </div>
-
-    <hr>
-    <p style="text-align:center; color:#006400; font-size:0.9rem;">
-        نفع الله بكم وجعل هذا العمل خالصًا لوجهه الكريم
-    </p>
-
-    <script>
-        function switchTab(tabName) {
-            // Hide all tab contents
-            const tabContents = document.querySelectorAll('.tab-content');
-            tabContents.forEach(content => {
-                content.classList.remove('active');
-            });
-
-            // Remove active class from all buttons
-            const tabButtons = document.querySelectorAll('.tab-button');
-            tabButtons.forEach(button => {
-                button.classList.remove('active');
-            });
-
-            // Show selected tab content
-            document.getElementById('tab-' + tabName).classList.add('active');
-
-            // Add active class to clicked button
-            event.target.classList.add('active');
-
-            // Pause all media when switching tabs
-            document.querySelectorAll('audio, video').forEach(media => {
-                media.pause();
-            });
-        }
-    </script>
-
+    <p class="greeting"></p>
+    <a href="jadid.html">Main Website</a>
 </body>
 </html>

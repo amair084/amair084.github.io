@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تذكيرات إيمانية | Faithful Reminders</title>
+    <style>
+        body {
+            font-family: "Arial", "Traditional Arabic", sans-serif;
+            max-width: 900px;
+            margin: 10px auto;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f8f0;
+            color: #333;
+            line-height: 1.8;
+        }
+        h1 {
+            font-family: "Amiri", "Traditional Arabic", "Arial", serif;
+            text-align: center;
+            color: #0b4d0b;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        .greeting {
+            text-align: center;
+            font-size: 1.4rem;
+            color: #006400;
+            margin-bottom: 20px;
+        }
+
+        /* Tabs Navigation */
+        .tabs-container {
+            background: #f8f8f0;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .tabs-nav {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .tab-button {
+            background: #f0f8f0;
+            color: #0b4d0b;
+            border: 2px solid #0b4d0b;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: "Arial", "Traditional Arabic", sans-serif;
+        }
+
+        .tab-button:hover {
+            background: #e8f5e8;
+            transform: translateY(-2px);
+        }
+
+        .tab-button.active {
+            background: #0b4d0b;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .reminder {
+            background: white;
+            padding: 15px;
+            margin: 25px 0;
+            border-right: 8px solid #0b4d0b;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .videoreminder {
+            background: white;
+            padding: 15px;
+            margin: 25px auto;
+            width: 50%;
+            border-right: 8px solid #0b4d0b;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .remindertitle {
+            background: white;
+            padding: 5px;
+            margin: 10px auto;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            border-right: 8px solid #0b4d0b;
+            border-radius: 8px;
+            width: 75%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .reminder h2 {
+            margin-top: 0;
+            color: #0b4d0b;
+            font-size: 1.5rem;
+        }
+
+        .videoreminder h2 {
+            margin-top: 0;
+            color: #0b4d0b;
+            font-size: 1.5rem;
+        }
+
+        .remindertitle h3 {
+            text-align: center;
+            margin: 0; 
+            color: #0b4d0b;
+            font-size: 1.5rem;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .section-title {
+            color: #0b4d0b;
+            font-size: 1.3rem;
+            margin: 20px 0 20px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        video {
+            display: block;
+            margin: 10px auto 0;
+            max-width: 300px;
+            width: 100%;
+            height: auto;
+        }
+
+        hr {
+            border: 1px solid #ddd;
+            margin: 40px 0;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            font-size: 1.2rem;
+            background: white;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .empty-state p {
+            margin: 10px 0;
+        }
+
+        .notice-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #0b4d0b;
+            color: white;
+            overflow: hidden;
+            z-index: 9999;
+            height: 25px;
+            display: flex;
+            align-items: center;
+        }
+
+        .notice-text {
+            white-space: nowrap;
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll-text 25s linear infinite;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* Animation */
+        @keyframes scroll-text {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-85%);
+            }
+        }
+
+
+        @media (max-width: 768px) {
+            .row {
+                flex-direction: column;
+            }
+            .videoreminder {
+                width: 100%;
+            }
+            .tab-button {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="notice-bar">
+        <div class="notice-text">
+        🚧 هذا الموقع قيد التطوير حالياً — This website is a work in progress 🚧
+        </div>
+    </div>
+
+    <h1>تذكيرات إيمانية | Faithful Reminders</h1>
+    <p class="greeting">السلام عليكم ورحمة الله وبركاته</p>
+    <hr>
+
+    <div class="tabs-container">
+        <div class="tabs-nav">
+            <button class="tab-button active" onclick="switchTab('khalid')">
+                الشيخ خالد الراشد
+            </button>
+            <button class="tab-button" onclick="switchTab('speaker2')">
+                الشيخ نايف الصحفي و الشيخ منصور السالمي
+            </button>
+            <button class="tab-button" onclick="switchTab('speaker3')">
+                متحدث آخر
+            </button>
+        </div>
+    </div>
+    
+
+    <!-- Tab 1: Sheikh Khalid Al-Rashid -->
+    <div id="tab-khalid" class="tab-content active">
+        <div class="remindertitle">
+            <h3>الشيخ خالد بن محمد بن حمد الراشد</h3>
+        </div>
+
+        <h2 class="section-title">📻 التذكيرات الصوتية</h2>
+
+        <div class="reminder">
+            <h2>يوم الحسرة</h2>
+            <audio controls preload="metadata">
+                <source src="audios/يوم الحسرة.mp3" type="audio/mpeg">
+                المتصفح لا يدعم تشغيل الصوت.
+            </audio>
+        </div>
+
+        <div class="reminder">
+            <h2>مراقبة نفسك</h2>
+            <audio controls preload="metadata">
+                <source src="audios/مراقبة نفسك.mp3" type="audio/mpeg">
+                المتصفح لا يدعم تشغيل الصوت.
+            </audio>
+        </div> 
+
+        <h2 class="section-title">🎥 التذكيرات المرئية</h2>
+
+        <div class="row">
+            <div class="videoreminder">
+                <h2>باب التوبة</h2>
+                <video controls preload="metadata">
+                    <source src="videos/babattawbah.mp4" type="video/mp4">
+                    المتصفح لا يدعم تشغيل الفيديو.
+                </video>
+            </div>
+
+            <div class="videoreminder">
+                <h2>أنا لا ألتزم لأنني مررت بتجربة سيئة</h2>
+                <video controls preload="metadata">
+                    <source src="videos/nopractice.mp4" type="video/mp4">
+                    المتصفح لا يدعم تشغيل الفيديو.
+                </video>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="videoreminder">
+                <h2>عمر رضي الله عنه يزور أبا الدرداء رضي الله عنه</h2>
+                <video controls preload="metadata">
+                    <source src="videos/umarabidarda.mp4" type="video/mp4">
+                    المتصفح لا يدعم تشغيل الفيديو.
+                </video>
+            </div>
+
+            <div class="videoreminder">
+                <h2>امرأة تتصل بالشيخ خالد (فك الله أسره)</h2>
+                <video controls preload="metadata">
+                    <source src="videos/womancalls.mp4" type="video/mp4">
+                    المتصفح لا يدعم تشغيل الفيديو.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab 2: Speaker 2 (Empty placeholder) -->
+    <div id="tab-speaker2" class="tab-content">
+        <div class="remindertitle">
+            <h3>الشيخ نايف الصحفي و الشيخ منصور السالمي</h3>
+        </div>
+
+        <h2 class="section-title">🎥 التذكيرات المرئية</h2>
+        
+        <div class="empty-state">
+            <p>🎙️</p>
+            <p>سيتم إضافة محتوى هذا المتحدث قريباً</p>
+            <p>بإذن الله تعالى</p>
+        </div>
+    </div>
+
+    <!-- Tab 3: Speaker 3 (Empty placeholder) -->
+    <div id="tab-speaker3" class="tab-content">
+        <div class="remindertitle">
+            <h3>متحدث ثالث - قريباً إن شاء الله</h3>
+        </div>
+        
+        <div class="empty-state">
+            <p>🎙️</p>
+            <p>سيتم إضافة محتوى هذا المتحدث قريباً</p>
+            <p>بإذن الله تعالى</p>
+        </div>
+    </div>
+
+    <hr>
+    <p style="text-align:center; color:#006400; font-size:0.9rem;">
+        نفع الله بكم وجعل هذا العمل خالصًا لوجهه الكريم
+    </p>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Remove active class from all buttons
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show selected tab content
+            document.getElementById('tab-' + tabName).classList.add('active');
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+
+            // Pause all media when switching tabs
+            document.querySelectorAll('audio, video').forEach(media => {
+                media.pause();
+            });
+        }
+    </script>
+
+</body>
+</html>
