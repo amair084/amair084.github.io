@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dagestan Recruitment Center</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Enable dark mode properly -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    }
+  </script>
+
+  <!-- Apply dark mode BEFORE page renders -->
+  <script>
+    if (!localStorage.theme) {
+      localStorage.theme = 'dark';
+    }
+
+    if (localStorage.theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+
+  <!-- Lucide -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="bg-white text-zinc-900 dark:bg-[rgb(3,7,18)] dark:text-zinc-100 transition-colors duration-300">
+
+  <!-- NAVBAR -->
+  <nav class="border-b border-zinc-200 dark:border-zinc-800">
+    <div class="max-w-4xl mx-auto px-6 py-4 flex justify-between items-center">
+
+      <!-- LEFT SIDE LINKS -->
+      <!-- LEFT SIDE LINKS -->
+      <div class="flex items-center gap-8 text-sm">
+        <a href="#" class="font-semibold" style="color: hsla(218, 11%, 65%, 1)">Home</a>
+        <a href="#projects" class="font-semibold hover:text-zinc-500 dark:hover:text-zinc-400 transition" style="color: hsla(218, 11%, 65%, 1)">Projects</a>
+        <a href="#contact" class="font-semibold hover:text-zinc-500 dark:hover:text-zinc-400 transition" style="color: hsla(218, 11%, 65%, 1)">Contact</a>
+      </div>
+
+      <!-- RIGHT SIDE TOGGLE -->
+     <!-- RIGHT SIDE TOGGLE -->
+    <button id="themeToggle"
+            class="p-2 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">
+      <i id="themeIcon" data-lucide="sun" class="w-4 h-4 text-yellow-400"></i>
+    </button>
+
+    </div>
+  </nav>
+
+  <main class="max-w-4xl mx-auto px-6 py-20">
+
+    <!-- HERO -->
+<section class="mb-24">
+  <div class="flex flex-col md:flex-row items-start justify-between gap-12">
+
+    <!-- LEFT SIDE: TEXT -->
+    <div class="max-w-xl">
+      <h1 class="text-4xl font-bold mb-8 whitespace-nowrap">
+      🤼‍♂️ 2-3 years dagestan? 👋
+    </h1>
+
+      <p class="text-zinc-600 dark:text-zinc-400 mb-8">
+        The mountains are waiting, achieve true strength, discipline, purpose, competitive, and gain life-long benefits and fun memories. 🏔️
+      </p>
+
+      <div class="flex gap-6 text-sm">
+        <a href="resume.pdf" class="hover:underline">Resume</a>
+        <a href="#" class="hover:underline">GitHub</a>
+        <a href="#" class="hover:underline">LinkedIn</a>
+        <a href="mailto:dagestan@email.com" class="hover:underline">Email</a>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDE: IMAGE COLLAGE -->
+    <div class="relative grid h-[233px] w-[350px] place-items-center shrink-0">
+      
+      <img src="d.png">
+  </div>
+</section>
+
+    <!-- EXPERIENCE -->
+    <section class="mb-24">
+      <h2 class="text-2xl font-semibold mb-8">Experience</h2>
+
+      <div class="mb-8">
+        <h3 class="font-semibold mb-3">Dagestani Central</h3>
+        <p class="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
+          Mountain Man/Fulltime Wrestler · 2-3 years ongoing
+        </p>
+        <ul class="mt-2 list-disc list-inside text-sm space-y-1 text-zinc-600 dark:text-zinc-400">
+          <li>went 2-3 years and forgot.</li>
+          <li>went 2-3 years and forgot by everyone.</li>
+          <li>went 2-3 years and forgot by myself.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="mb-24">
+      <h2 class="text-2xl font-semibold mb-8">Featured Projects</h2>
+
+      <div class="grid md:grid-cols-2 gap-6">
+
+        <div class="border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 hover:shadow-md dark:hover:bg-zinc-900 transition">
+          <h3 class="font-semibold text-lg mb-2">Dagestan</h3>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-4">
+            Personal Dagestani training regiment.
+          </p>
+
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="text-xs bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded-md">Strength</span>
+            <span class="text-xs bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded-md">Speed</span>
+            <span class="text-xs bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded-md">Endurance</span>
+          </div>
+
+          <div class="flex gap-4 text-sm">
+            <a href="#" class="hover:underline">Live</a>
+            <a href="#" class="hover:underline">Training</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <h2 class="text-2xl font-semibold mb-4">Contact</h2>
+      <p class="text-zinc-600 dark:text-zinc-400 mb-4">
+        Feel free to reach out via email.
+      </p>
+      <a href="mailto:you@email.com" class="hover:underline">
+        dagestan@email.com
+      </a>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-zinc-200 dark:border-zinc-800 mt-20 py-6 text-center text-sm text-zinc-500 dark:text-zinc-400">
+    © 2026 Your Name
+  </footer>
+
+  <!-- TOGGLE SCRIPT -->
+  <script>
+  const toggle = document.getElementById('themeToggle');
+  const html = document.documentElement;
+  const icon = document.getElementById('themeIcon');
+
+  function updateIcon() {
+    // Icon type changes for dark/light mode, color stays yellow
+    icon.setAttribute(
+      "data-lucide",
+      html.classList.contains('dark') ? "sun" : "moon"
+    );
+    lucide.createIcons();
+  }
+
+  toggle.addEventListener('click', () => {
+    html.classList.toggle('dark');
+    localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
+    updateIcon();
+  });
+
+  updateIcon();
+</script>
+
+</body>
+</html>
