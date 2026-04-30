@@ -1,241 +1,642 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal</title>
-    <style>
-        body {
-            font-family: "Arial", "Traditional Arabic", sans-serif;
-            max-width: 900px;
-            margin: 10px auto;
-            margin-top: 30px;
-            padding: 20px;
-            background: #f8f8f0;
-            color: #333;
-            line-height: 1.8;
-        }
-        h1 {
-            font-family: "Amiri", "Traditional Arabic", "Arial", serif;
-            text-align: center;
-            color: #0b4d0b;
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-        }
-        .greeting {
-            text-align: center;
-            font-size: 1.4rem;
-            color: #006400;
-            margin-bottom: 20px;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aaron Mairel — Data Analytics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
 
-        /* Tabs Navigation */
-        .tabs-container {
-            background: #f8f8f0;
-            padding: 10px;
-            margin: 10px 0;
-        }
+  <style>
+    :root {
+      --bg:          #0A0B0F;
+      --bg2:         #11131A;
+      --surface:     #161922;
+      --surface2:    #1F2330;
+      --border:      rgba(255,255,255,0.06);
+      --border2:     rgba(255,255,255,0.12);
+      --text:        #F1F3F8;
+      --muted:       #A1A8C0;
+      --ghost:       #6F788F;
+      --blue:        #4A8CFF;
+      --blue-dark:   #2A6BD9;
+      --blue-mid:    #60A5FF;
+      --green:       #22C55E;
+      --green-dark:  #16A34A;
+      --orange:      #FB923C;
+      --accent:      #6366F1;
 
-        .tabs-nav {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-bottom: 10px;
-        }
+      --mono:        'DM Mono', monospace;
+      --sans:        'Syne', sans-serif;
+      --serif:       'Instrument Serif', serif;
+    }
 
-        .tab-button {
-            background: #f0f8f0;
-            color: #0b4d0b;
-            border: 2px solid #0b4d0b;
-            padding: 12px 25px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: "Arial", "Traditional Arabic", sans-serif;
-        }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); line-height: 1.5; overflow-x: hidden; }
 
-        .tab-button:hover {
-            background: #e8f5e8;
-            transform: translateY(-2px);
-        }
+    /* ─── STICKY NAV ─── */
+    header {
+      background: rgba(10, 11, 15, 0.95);
+      backdrop-filter: blur(12px);
+      position: sticky; top: 0; z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      max-width: 1120px; margin: 0 auto; padding: 0 52px;
+      height: 58px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .header-name { font-family: var(--mono); font-size: 13px; font-weight: 500; color: #fff; letter-spacing: 0.06em; }
+    nav { display: flex; gap: 32px; align-items: center; }
+    nav a {
+      font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
+      text-transform: uppercase; color: rgba(255,255,255,0.65); text-decoration: none;
+      transition: color 0.2s; position: relative; padding-bottom: 3px;
+    }
+    nav a::after {
+      content:''; position:absolute; bottom:0; left:0; right:0; height:2px;
+      background: var(--green); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.22s ease; border-radius: 2px;
+    }
+    nav a:hover { color: #fff; }
+    nav a:hover::after { transform: scaleX(1); }
+    .pulse-dot {
+      width:7px; height:7px; border-radius:50%; background: var(--green);
+      box-shadow: 0 0 8px rgba(34,197,94,0.9); animation: pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.5)} }
 
-        .tab-button.active {
-            background: #0b4d0b;
-            color: white;
-        }
+    /* ─── TICKER ─── */
+    .ticker-outer {
+      overflow: hidden; border-bottom: 1px solid var(--border);
+      background: var(--surface); padding: 10px 0;
+    }
+    .ticker-row { display: flex; white-space: nowrap; }
+    .ticker-row-a { animation: scroll-l 55s linear infinite; }
+    .ticker-row-b { animation: scroll-r 44s linear infinite; margin-top: 6px; }
+    @keyframes scroll-l { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    @keyframes scroll-r { from{transform:translateX(-50%)} to{transform:translateX(0)} }
+    .tick {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 0 20px; font-family: var(--mono); font-size: 11px;
+      border-right: 1px solid var(--border);
+    }
+    .tick .lbl { color: var(--ghost); }
+    .tick .val { color: var(--text); }
+    .tick.up .val { color: var(--green); font-weight: 500; }
+    .tick.dn .val { color: var(--orange); }
 
-        .tab-content {
-            display: none;
-        }
+    /* ─── PAGE WRAPPER ─── */
+    .page { max-width: 1120px; margin: 0 auto; padding: 0 52px; }
 
-        .tab-content.active {
-            display: block;
-        }
+    /* ─── HERO ─── */
+    .hero {
+      padding: 76px 0 68px;
+      display: grid; grid-template-columns: 1fr 220px;
+      gap: 60px; align-items: start;
+      border-bottom: 1px solid var(--border);
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--blue);
+      background: rgba(74,140,255,0.12); border: 1px solid rgba(74,140,255,0.25);
+      border-radius: 100px; padding: 5px 14px 5px 10px; margin-bottom: 24px;
+    }
+    .eyebrow-dot { width:5px; height:5px; border-radius:50%; background:var(--blue); }
 
-        .row {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
+    .hero-headline {
+      font-family: var(--serif);
+      font-size: clamp(62px, 9vw, 118px);
+      font-weight: 400; line-height: 0.92; letter-spacing: -0.03em;
+      color: var(--text); margin-bottom: 14px;
+    }
+    .hero-headline .ital { font-style: italic; color: var(--blue-mid); }
 
-        .reminder {
-            background: white;
-            padding: 15px;
-            margin: 25px 0;
-            border-right: 8px solid #0b4d0b;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
+    .hero-role {
+      font-family: var(--mono); font-size: 12px; color: var(--muted);
+      letter-spacing: 0.06em; margin-bottom: 28px;
+    }
 
-        .videoreminder {
-            background: white;
-            padding: 15px;
-            margin: 25px auto;
-            width: 50%;
-            border-right: 8px solid #0b4d0b;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
+    .hero-sub {
+      font-size: 16px; color: var(--muted); max-width: 500px;
+      line-height: 1.74; margin-bottom: 36px;
+    }
 
-        .remindertitle {
-            background: white;
-            padding: 5px;
-            margin: 10px auto;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-            border-right: 8px solid #0b4d0b;
-            border-radius: 8px;
-            width: 75%;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    /* Location badge */
+    .location-badge {
+      display: inline-flex; align-items: center; gap: 14px;
+      background: var(--surface); border: 2px solid var(--blue);
+      border-radius: 14px; padding: 16px 22px;
+      box-shadow: 0 4px 20px rgba(74,140,255,0.12);
+    }
+    .location-icon { width:20px; height:20px; color: var(--blue); flex-shrink:0; }
+    .location-label {
+      font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--ghost); margin-bottom: 3px;
+    }
+    .location-value {
+      font-family: var(--sans); font-size: 16px; font-weight: 700;
+      color: var(--text); letter-spacing: -0.01em; margin-bottom: 3px;
+    }
+    .location-note {
+      font-family: var(--mono); font-size: 10px;
+      color: var(--green); font-weight: 500;
+    }
 
-        .reminder h2 {
-            margin-top: 0;
-            color: #0b4d0b;
-            font-size: 1.5rem;
-        }
+    /* Stat column */
+    .hero-right { display: flex; flex-direction: column; gap: 10px; padding-top: 6px; }
+    .hstat-card {
+      background: var(--surface); border: 1px solid var(--border2);
+      border-radius: 14px; padding: 18px 20px; text-align: right;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    .hstat-val {
+      font-family: var(--mono); font-size: 28px; font-weight: 500;
+      color: var(--blue); line-height: 1; margin-bottom: 4px;
+    }
+    .hstat-val.green { color: var(--green); }
+    .hstat-lbl { font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ghost); }
 
-        .videoreminder h2 {
-            margin-top: 0;
-            color: #0b4d0b;
-            font-size: 1.5rem;
-        }
+    /* ─── SECTION HEADER ─── */
+    .sec-head { display:flex; align-items:center; gap:20px; padding:72px 0 40px; }
+    .sec-head .lbl { font-family:var(--mono); font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
+    .sec-head .hr { flex:1; height:1px; background:var(--border); }
+    .sec-head .ct { font-family:var(--mono); font-size:10px; color:var(--ghost); }
 
-        .remindertitle h3 {
-            text-align: center;
-            margin: 0; 
-            color: #0b4d0b;
-            font-size: 1.5rem;
-        }
+    /* ─── FEATURED CARD ─── */
+    .feat {
+      background: var(--surface); border: 1px solid var(--border2);
+      border-radius: 20px; overflow: hidden; position: relative;
+      margin-bottom: 14px; box-shadow: 0 4px 28px rgba(0,0,0,0.3);
+    }
+    .feat::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background: linear-gradient(90deg, var(--blue) 0%, var(--accent) 100%);
+    }
+    .feat-body { display:grid; grid-template-columns:1fr 310px; border-bottom:1px solid var(--border); }
+    .feat-left { padding:52px 52px 48px; border-right:1px solid var(--border); }
 
-        audio {
-            width: 100%;
-            margin-top: 10px;
-        }
+    .feat-pill {
+      display:inline-flex; align-items:center; gap:8px;
+      background:rgba(74,140,255,0.12); border:1px solid rgba(74,140,255,0.25);
+      border-radius:100px; padding:5px 14px 5px 8px; margin-bottom:24px;
+    }
+    .feat-pill-dot { width:6px; height:6px; border-radius:50%; background:var(--blue); }
+    .feat-pill span { font-family:var(--mono); font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--blue); }
 
-        .section-title {
-            color: #0b4d0b;
-            font-size: 1.3rem;
-            margin: 20px 0 20px;
-            text-align: center;
-            font-weight: 500;
-        }
+    .feat-num { font-family:var(--mono); font-size:10px; color:var(--ghost); letter-spacing:0.1em; margin-bottom:11px; }
+    .feat-title { font-family:var(--serif); font-size:clamp(38px,4.2vw,58px); font-weight:400; line-height:1.02; letter-spacing:-0.02em; color:var(--text); margin-bottom:22px; }
+    .feat-title em { font-style:italic; color:var(--blue-mid); }
+    .feat-desc { font-size:14.5px; color:var(--muted); line-height:1.8; max-width:460px; margin-bottom:28px; }
 
-        video {
-            display: block;
-            margin: 10px auto 0;
-            max-width: 300px;
-            width: 100%;
-            height: auto;
-        }
+    .tags { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:32px; }
+    .tag {
+      font-family:var(--mono); font-size:10px; letter-spacing:0.04em;
+      color:var(--muted); border:1px solid var(--border2); border-radius:100px;
+      padding:4px 12px; background:var(--bg2);
+      transition:color 0.2s,border-color 0.2s,background 0.2s;
+    }
+    .tag:hover { color:var(--blue); border-color:rgba(74,140,255,0.3); background:rgba(74,140,255,0.1); }
 
-        hr {
-            border: 1px solid #ddd;
-            margin: 40px 0;
-        }
+    .btn-primary {
+      display:inline-flex; align-items:center; gap:10px;
+      background:var(--green); color:#fff; font-family:var(--mono); font-size:11px;
+      font-weight:500; letter-spacing:0.1em; text-transform:uppercase;
+      text-decoration:none; padding:14px 28px; border-radius:100px;
+      box-shadow:0 4px 16px rgba(34,197,94,0.28);
+      transition:transform 0.2s,box-shadow 0.2s,background 0.2s;
+    }
+    .btn-primary:hover { background:var(--green-dark); transform:translateY(-2px); box-shadow:0 8px 28px rgba(34,197,94,0.38); }
+    .btn-primary .arr { transition:transform 0.2s; }
+    .btn-primary:hover .arr { transform:translateX(4px); }
 
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: #666;
-            font-size: 1.2rem;
-            background: white;
-            border-radius: 8px;
-            margin: 20px 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
+    /* Data panel - restored original layout */
+    .feat-panel { padding:24px 20px; background:var(--bg); display:flex; flex-direction:column; gap:10px; }
+    .dp {
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:12px; padding:15px 17px;
+      transition:border-color 0.2s,box-shadow 0.2s;
+    }
+    .dp:hover { border-color:rgba(74,140,255,0.25); box-shadow:0 2px 14px rgba(74,140,255,0.07); }
+    .dp-lbl { font-family:var(--mono); font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ghost); margin-bottom:7px; }
+    .dp-val { font-family:var(--mono); font-size:24px; color:var(--text); line-height:1; margin-bottom:4px; }
+    .dp-delta { font-family:var(--mono); font-size:10px; }
+    .dp-delta.up { color:var(--green); }
+    .dp-delta.dn { color:var(--orange); }
+    .spark { width:100%; margin-top:8px; }
 
-        .empty-state p {
-            margin: 10px 0;
-        }
+    .dep-bars { margin-top:10px; display:flex; flex-direction:column; gap:7px; }
+    .dep-row { display:flex; align-items:center; gap:8px; }
+    .dep-yr { font-family:var(--mono); font-size:9px; color:var(--ghost); width:22px; flex-shrink:0; }
+    .dep-track { flex:1; height:4px; background:var(--bg2); border-radius:2px; overflow:hidden; }
+    .dep-fill {
+      height:100%; background:linear-gradient(to right,var(--blue),var(--green));
+      border-radius:2px; transform-origin:left;
+      animation:barGrow 1.1s ease forwards; transform:scaleX(0);
+    }
+    @keyframes barGrow { to{transform:scaleX(1)} }
+    .dep-pct { font-family:var(--mono); font-size:9px; color:var(--muted); width:26px; text-align:right; }
 
-        .notice-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: #0b4d0b;
-            color: white;
-            overflow: hidden;
-            z-index: 9999;
-            height: 25px;
-            display: flex;
-            align-items: center;
-        }
+    /* Finding strip */
+    .feat-finding {
+      display:flex; align-items:center; justify-content:space-between; gap:28px;
+      padding:20px 52px; background: rgba(99,102,241,0.08);
+    }
+    .finding-txt { font-family:var(--serif); font-style:italic; font-size:14.5px; color:var(--muted); line-height:1.65; }
+    .finding-hi { color:var(--accent); font-weight:500; }
 
-        .notice-text {
-            white-space: nowrap;
-            display: inline-block;
-            padding-left: 100%;
-            animation: scroll-text 25s linear infinite;
-            font-size: 1rem;
-            font-weight: 500;
-        }
+    .btn-ghost {
+      display:inline-flex; align-items:center; gap:8px;
+      font-family:var(--mono); font-size:11px; letter-spacing:0.08em;
+      color:var(--muted); text-decoration:none; border:1px solid var(--border2);
+      border-radius:100px; padding:9px 18px; white-space:nowrap; flex-shrink:0;
+      background:var(--surface); transition:color 0.2s,border-color 0.2s,transform 0.2s;
+    }
+    .btn-ghost:hover { transform:translateY(-2px); color:var(--blue); border-color:rgba(74,140,255,0.35); }
 
-        /* Animation */
-        @keyframes scroll-text {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-85%);
-            }
-        }
+    /* ─── PROJECT CARDS ─── */
+    .proj-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
+    .proj {
+      background:var(--surface); border:1px solid var(--border2); border-radius:20px;
+      padding:38px 36px 32px; display:flex; flex-direction:column; position:relative;
+      overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,0.25);
+      transition:transform 0.32s cubic-bezier(.23,1,.32,1),box-shadow 0.32s;
+    }
+    .proj:hover { transform:translateY(-5px); box-shadow:0 12px 36px rgba(0,0,0,0.35); }
+    .proj::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background:var(--accent-col,var(--blue)); opacity:0; transition:opacity 0.3s;
+    }
+    .proj:hover::before { opacity:1; }
+    .proj.vio { --accent-col:var(--accent); }
+    .proj.cor { --accent-col:var(--orange); }
 
+    .proj-num { font-family:var(--mono); font-size:10px; color:var(--ghost); letter-spacing:0.1em; margin-bottom:22px; }
+    .proj-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
+    .proj-icon.vio { background:rgba(99,102,241,0.1); border:1px solid rgba(99,102,241,0.25); }
+    .proj-icon.cor { background:rgba(251,146,60,0.07); border:1px solid rgba(251,146,60,0.18); }
+    .proj-title { font-family:var(--serif); font-size:27px; font-weight:400; line-height:1.1; color:var(--text); margin-bottom:12px; }
+    .proj-title em { font-style:italic; }
+    .proj-title.vio em { color:var(--accent); }
+    .proj-title.cor em { color:var(--orange); }
+    .proj-desc { font-size:13.5px; color:var(--muted); line-height:1.76; flex:1; margin-bottom:26px; }
+    .proj-foot { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
 
-        @media (max-width: 768px) {
-            .row {
-                flex-direction: column;
-            }
-            .videoreminder {
-                width: 100%;
-            }
-            .tab-button {
-                font-size: 1rem;
-                padding: 10px 20px;
-            }
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    /* ─── ABOUT ─── */
+    .about-grid { display:grid; grid-template-columns:260px 1fr; gap:80px; padding-bottom:88px; }
+    .about-kv-lbl { font-family:var(--mono); font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ghost); margin-bottom:20px; }
+    .kv { margin-bottom:14px; }
+    .kv .k { font-family:var(--mono); font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ghost); margin-bottom:4px; }
+    .kv .v { font-family:var(--mono); font-size:12px; color:var(--muted); line-height:1.6; }
+    .about-pull { font-family:var(--serif); font-style:italic; font-size:clamp(24px,3vw,34px); line-height:1.3; color:var(--text); letter-spacing:-0.01em; margin-bottom:24px; }
+    .about-pull em { color:var(--blue-mid); }
+    .about-prose { font-size:15px; color:var(--muted); line-height:1.84; }
+
+    /* ─── CONTACT ─── */
+    .contact-section { border-top:1px solid var(--border); padding:72px 0 88px; }
+    .contact-head { font-family:var(--serif); font-style:italic; font-size:clamp(40px,6vw,76px); color:var(--text); letter-spacing:-0.025em; line-height:0.97; margin-bottom:52px; }
+    .contact-head em { color:var(--blue-mid); }
+    .contact-links { display:flex; gap:12px; flex-wrap:wrap; }
+    .clink {
+      display:inline-flex; align-items:center; gap:10px;
+      font-family:var(--mono); font-size:12px; letter-spacing:0.06em;
+      text-decoration:none; border:1px solid var(--border2); border-radius:100px;
+      padding:13px 24px; color:var(--muted); background:var(--surface);
+      transition:color 0.2s,border-color 0.2s,transform 0.2s,box-shadow 0.2s;
+    }
+    .clink:hover { transform:translateY(-3px); border-color:var(--blue); color:var(--text); box-shadow:0 4px 16px rgba(74,140,255,0.15); }
+
+    /* ─── FOOTER ─── */
+    footer { background:var(--bg2); padding:22px 52px; display:flex; justify-content:space-between; border-top: 1px solid var(--border); }
+    .ft { font-family:var(--mono); font-size:10px; color:rgba(255,255,255,0.55); letter-spacing:0.05em; }
+
+    /* ─── REVEAL ─── */
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    .rv { opacity:0; animation:fadeUp 0.65s ease forwards; }
+    .rv1{animation-delay:.04s} .rv2{animation-delay:.15s} .rv3{animation-delay:.28s}
+    .rv4{animation-delay:.42s} .rv5{animation-delay:.56s}
+
+    /* ─── RESPONSIVE ─── */
+    @media(max-width:860px){
+      .page{padding:0 24px;}
+      .header-inner{padding:0 24px;}
+      .hero{grid-template-columns:1fr;}
+      .hero-right{flex-direction:row;flex-wrap:wrap;}
+      .hstat-card{flex:1;min-width:130px;}
+      .feat-body{grid-template-columns:1fr;}
+      .feat-panel{border-top:1px solid var(--border);}
+      .feat-left{padding:32px 28px;}
+      .feat-finding{flex-direction:column;align-items:flex-start;padding:20px 28px;}
+      .proj-grid{grid-template-columns:1fr;}
+      .about-grid{grid-template-columns:1fr;gap:32px;}
+      footer{padding:22px 24px;}
+    }
+  </style>
 </head>
 <body>
-    <div class="notice-bar">
-        <div class="notice-text">
-        🚧 هذا الموقع قيد التطوير حالياً — This website is a work in progress 🚧
+
+  <!-- STICKY NAV -->
+  <header>
+    <div class="header-inner">
+      <div class="header-name">Aaron Mairel</div>
+      <nav>
+        <div class="pulse-dot"></div>
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- TICKER -->
+  <div class="ticker-outer rv rv1" aria-hidden="true">
+    <div class="ticker-row ticker-row-a" id="tick-a"></div>
+    <div class="ticker-row ticker-row-b" id="tick-b"></div>
+  </div>
+
+  <div class="page">
+
+    <!-- HERO -->
+    <section class="hero rv rv2">
+      <div class="hero-left">
+        <div class="eyebrow"><span class="eyebrow-dot"></span>Data Analytics</div>
+        <h1 class="hero-headline">
+          Aaron<br/><span class="ital">Mairel.</span>
+        </h1>
+        <p class="hero-role">Data Analyst · Python · SQL · Visualization</p>
+        <p class="hero-sub">I build tools that turn raw data into clear decisions — and make analytics accessible to people who shouldn't need a CS degree to use them.</p>
+
+        <div class="location-badge">
+          <svg class="location-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          <div>
+            <div class="location-label">Based in</div>
+            <div class="location-value">Phoenix, Arizona</div>
+            <div class="location-note">✓ Open to local &amp; remote opportunities</div>
+          </div>
         </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="hstat-card">
+          <div class="hstat-val green" id="stat-n-hero">18</div>
+          <div class="hstat-lbl">Datasets<br/>Analyzed</div>
+        </div>
+        <div class="hstat-card">
+          <div class="hstat-val">0.87</div>
+          <div class="hstat-lbl">Avg Conf.<br/>Score</div>
+        </div>
+        <div class="hstat-card">
+          <div class="hstat-val">03</div>
+          <div class="hstat-lbl">Projects<br/>Live</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED WORK -->
+    <div id="work">
+      <div class="sec-head rv rv3">
+        <span class="lbl">Featured Work</span>
+        <div class="hr"></div>
+        <span class="ct">01 / 03</span>
+      </div>
     </div>
 
-    <h1>Welcome</h1>
-    <hr>
-    <p class="greeting"></p>
-    <a href="jadid.html">Main Website</a><br>
-    <a href="index3.html">Hangman</a><br>
-    <a href="dagestan.html">Dagestan</a><br>
+    <div class="feat rv rv4">
+      <div class="feat-body">
+        <div class="feat-left">
+          <div class="feat-pill"><div class="feat-pill-dot"></div><span>Centerpiece</span></div>
+          <div class="feat-num">PROJECT 01</div>
+          <h2 class="feat-title">Cars Market<br/><em>Analysis</em></h2>
+          <p class="feat-desc">
+            Collects and analyzes used vehicle listings from Cars.com to surface pricing trends,
+            depreciation curves, and the relationships between price, mileage, and model year.
+            Built end-to-end in Python — from scraping and dataset cleaning through to visualization.
+          </p>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">Pandas</span>
+            <span class="tag">BeautifulSoup</span>
+            <span class="tag">Matplotlib</span>
+            <span class="tag">Data Cleaning</span>
+            <span class="tag">Visualization</span>
+          </div>
+          <a href="#" class="btn-primary">View Project <span class="arr">→</span></a>
+        </div>
+
+        <div class="feat-panel">
+          <div class="dp">
+            <div class="dp-lbl">Listings Analyzed</div>
+            <div class="dp-val" id="stat-n">4,812</div>
+            <div class="dp-delta up" id="stat-d">▲ 12 new today</div>
+          </div>
+          <div class="dp">
+            <div class="dp-lbl">Median Asking Price</div>
+            <div class="dp-val">$24,180</div>
+            <div class="dp-delta dn">▼ $340 vs. 90-day avg</div>
+          </div>
+          <div class="dp">
+            <div class="dp-lbl">6-Month Price Trend</div>
+            <svg class="spark" viewBox="0 0 264 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#4A8CFF" stop-opacity="0.18"/>
+                  <stop offset="100%" stop-color="#4A8CFF" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path d="M0,50 L44,44 L88,48 L132,34 L176,38 L220,24 L264,22 L264,68 L0,68 Z" fill="url(#sg)"/>
+              <path d="M0,50 L44,44 L88,48 L132,34 L176,38 L220,24 L264,22" stroke="#4A8CFF" stroke-width="1.5" stroke-linejoin="round"/>
+              <circle cx="264" cy="22" r="3" fill="#22C55E"/>
+              <text x="0"   y="66" fill="#6F788F" font-family="DM Mono,monospace" font-size="9">Nov</text>
+              <text x="40"  y="66" fill="#6F788F" font-family="DM Mono,monospace" font-size="9">Dec</text>
+              <text x="83"  y="66" fill="#6F788F" font-family="DM Mono,monospace" font-size="9">Jan</text>
+              <text x="126" y="66" fill="#6F788F" font-family="DM Mono,monospace" font-size="9">Feb</text>
+              <text x="167" y="66" fill="#6F788F" font-family="DM Mono,monospace" font-size="9">Mar</text>
+              <text x="210" y="66" fill="#6F788F" font-family="DM Mono,monospace" font-size="9">Apr</text>
+            </svg>
+          </div>
+          <div class="dp" style="flex:1">
+            <div class="dp-lbl">Avg Depreciation by Year</div>
+            <div class="dep-bars">
+              <div class="dep-row"><span class="dep-yr">Y1</span><div class="dep-track"><div class="dep-fill" style="width:22%;animation-delay:.1s"></div></div><span class="dep-pct">22%</span></div>
+              <div class="dep-row"><span class="dep-yr">Y2</span><div class="dep-track"><div class="dep-fill" style="width:34%;animation-delay:.2s"></div></div><span class="dep-pct">34%</span></div>
+              <div class="dep-row"><span class="dep-yr">Y3</span><div class="dep-track"><div class="dep-fill" style="width:42%;animation-delay:.3s"></div></div><span class="dep-pct">42%</span></div>
+              <div class="dep-row"><span class="dep-yr">Y4</span><div class="dep-track"><div class="dep-fill" style="width:50%;animation-delay:.4s"></div></div><span class="dep-pct">50%</span></div>
+              <div class="dep-row"><span class="dep-yr">Y5</span><div class="dep-track"><div class="dep-fill" style="width:57%;animation-delay:.5s"></div></div><span class="dep-pct">57%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feat-finding">
+        <p class="finding-txt">
+          Key finding: <span class="finding-hi">first-year depreciation is consistently underpriced</span>
+          by private sellers vs. dealers — a predictable arbitrage window for buyers targeting 12–18 month old vehicles.
+        </p>
+        <a href="#" class="btn-ghost">Read more →</a>
+      </div>
+    </div>
+
+    <!-- SUPPORTING PROJECTS -->
+    <div class="sec-head">
+      <span class="lbl">Supporting Projects</span>
+      <div class="hr"></div>
+      <span class="ct">02 – 03</span>
+    </div>
+
+    <div class="proj-grid">
+      <div class="proj vio rv rv4">
+        <div class="proj-num">PROJECT 02</div>
+        <div class="proj-icon vio">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <rect x="2" y="4" width="16" height="2.5" rx="1" fill="#6366F1" opacity="0.5"/>
+            <rect x="2" y="9" width="12" height="2.5" rx="1" fill="#6366F1" opacity="0.75"/>
+            <rect x="2" y="14" width="7" height="2.5" rx="1" fill="#6366F1"/>
+          </svg>
+        </div>
+        <h3 class="proj-title vio">No<em>Code</em>SQL</h3>
+        <p class="proj-desc">
+          A visual SQL assistant built in Python for people who shouldn't have to learn SQL just to ask a question.
+          Non-programmers explore relational databases through a guided interface — no syntax required.
+        </p>
+        <div class="proj-foot">
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">UX</span>
+          </div>
+          <a href="#" class="btn-ghost vio">View →</a>
+        </div>
+      </div>
+
+      <div class="proj cor rv rv5">
+        <div class="proj-num">PROJECT 03</div>
+        <div class="proj-icon cor">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="7" stroke="#FB923C" stroke-width="1.5" opacity="0.55"/>
+            <path d="M7 10l2 2 4-4" stroke="#FB923C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="proj-title cor">Amazon Arbitrage <em>Scanner</em></h3>
+        <p class="proj-desc">
+          Cross-references Amazon listings against Google Shopping to surface profitable FBM arbitrage opportunities.
+          Filters by seller count, velocity, and ROI. Dark-mode UI with live results, confidence scoring, and CSV export.
+        </p>
+        <div class="proj-foot">
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">Selenium</span>
+            <span class="tag">SerpAPI</span><span class="tag">Pandas</span>
+          </div>
+          <a href="#" class="btn-ghost cor">View →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <div id="about">
+      <div class="sec-head" style="padding-top:72px;">
+        <span class="lbl">About</span>
+        <div class="hr"></div>
+      </div>
+    </div>
+
+    <div class="about-grid">
+      <div>
+        <div class="about-kv-lbl">Aaron Mairel</div>
+        <div class="kv"><div class="k">Focus</div><div class="v">Data Analytics</div></div>
+        <div class="kv"><div class="k">Location</div><div class="v">Phoenix, AZ</div></div>
+        <div class="kv"><div class="k">Status</div><div class="v">Student & Builder</div></div>
+        <div class="kv" style="margin-top:28px;">
+          <div class="k">Stack</div>
+          <div class="v">Python · Pandas · SQL<br/>Selenium · BeautifulSoup<br/>Matplotlib · CustomTkinter</div>
+        </div>
+      </div>
+      <div>
+        <p class="about-pull">I gravitate toward problems where <em>messy data</em> meets a decision someone actually needs to make.</p>
+        <p class="about-prose">
+          My work falls into two categories: market research tools that surface what the numbers are really saying,
+          and accessibility tools that remove technical friction for people who have better things to do than learn SQL.
+          I'm precise by habit and curious by default — which means I'll go twelve layers deep into a depreciation dataset
+          before calling a finding reliable.
+          <br/><br/>
+          Outside the data, I think a lot about how to make analytical work legible to the people who need it most.
+        </p>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div id="contact" class="contact-section">
+      <h2 class="contact-head">Let's work on<br/><em>something real.</em></h2>
+      <div class="contact-links">
+        <a href="https://github.com/amair084" target="_blank" rel="noopener" class="clink gh">
+          <svg class="cicon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          github.com/amair084
+        </a>
+        <a href="#" class="clink li dim" tabindex="-1">LinkedIn — coming soon</a>
+        <a href="#" class="clink em dim" tabindex="-1">Email — coming soon</a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <span class="ft">© 2026 Aaron Mairel</span>
+    <span class="ft">Built from scratch · No templates</span>
+  </footer>
+
+  <script>
+    const dataA = [
+      {l:'Honda Civic 2020',    v:'$18,400',  cls:'up'},
+      {l:'Avg Depreciation Y1', v:'−22.4%',   cls:'dn'},
+      {l:'Toyota Camry 2021',   v:'$24,100',  cls:''},
+      {l:'Listings Scraped',    v:'4,812',    cls:'up'},
+      {l:'Ford F-150 2019',     v:'$31,200',  cls:''},
+      {l:'Price ∆ 90d',         v:'−$340',    cls:'dn'},
+      {l:'BMW 3 Series 2020',   v:'$29,900',  cls:''},
+      {l:'Dealer Premium',      v:'+$1,850',  cls:'up'},
+      {l:'Subaru Outback 2021', v:'$22,600',  cls:''},
+      {l:'Confidence Score',    v:'0.87',     cls:'up'},
+    ];
+    const dataB = [
+      {l:'Mileage Median',       v:'41,300 mi', cls:''},
+      {l:'Nissan Altima 2020',   v:'$16,800',   cls:'dn'},
+      {l:'Honda Retention',      v:'#1 / 10',   cls:'up'},
+      {l:'Hyundai Tucson 2022',  v:'$23,200',   cls:''},
+      {l:'Jeep Wrangler 2021',   v:'$38,400',   cls:''},
+      {l:'Chevrolet Equinox',    v:'$26,750',   cls:'up'},
+      {l:'Avg 3yr Depreciation', v:'38.4%',     cls:'dn'},
+      {l:'Model Year Spread',    v:'2018–2024', cls:''},
+      {l:'Private vs Dealer ∆',  v:'−$1,200',   cls:'dn'},
+      {l:'Data Freshness',       v:'Live',      cls:'up'},
+    ];
+
+    function buildTicker(data, id) {
+      const el = document.getElementById(id);
+      el.innerHTML = '';
+      [...data, ...data].forEach(d => {
+        const div = document.createElement('div');
+        div.className = `tick ${d.cls}`;
+        div.innerHTML = `<span class="lbl">${d.l}</span><span class="val">${d.v}</span>`;
+        el.appendChild(div);
+      });
+    }
+    buildTicker(dataA, 'tick-a');
+    buildTicker(dataB, 'tick-b');
+
+    let n = 4812;
+    setInterval(() => {
+      const delta = Math.floor(Math.random() * 3);
+      if (!delta) return;
+      n += delta;
+      const el  = document.getElementById('stat-n');
+      const elH = document.getElementById('stat-n-hero');
+      const dl  = document.getElementById('stat-d');
+      if (el)  el.textContent  = n.toLocaleString();
+      if (elH) elH.textContent = n.toLocaleString();
+      if (dl)  dl.textContent  = `▲ ${delta} just now`;
+    }, 7000);
+  </script>
 </body>
 </html>
