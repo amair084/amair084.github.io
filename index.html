@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aaron Mairel — Data Analytics</title>
+  <title>Aaron Mairel — Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -25,6 +25,7 @@
       --green:       #22C55E;
       --green-dark:  #16A34A;
       --orange:      #FB923C;
+      --purple:      #b163f1;
       --accent:      #6366F1;
 
       --mono:        'DM Mono', monospace;
@@ -267,19 +268,19 @@
     .proj:hover { transform:translateY(-5px); box-shadow:0 12px 36px rgba(0,0,0,0.35); }
     .proj::before {
       content:''; position:absolute; top:0; left:0; right:0; height:3px;
-      background:var(--accent-col,var(--blue)); opacity:0; transition:opacity 0.3s;
+      background:var(--accent-col,var(--purple)); opacity:0; transition:opacity 0.3s;
     }
     .proj:hover::before { opacity:1; }
-    .proj.vio { --accent-col:var(--accent); }
+    .proj.vio { --purple-col:var(--purple); }
     .proj.cor { --accent-col:var(--orange); }
 
     .proj-num { font-family:var(--mono); font-size:10px; color:var(--ghost); letter-spacing:0.1em; margin-bottom:22px; }
     .proj-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
-    .proj-icon.vio { background:rgba(99,102,241,0.1); border:1px solid rgba(99,102,241,0.25); }
+    .proj-icon.vio { background:rgba(177, 99, 241, 0.1); border:1px solid rgba(177, 99, 241, 0.25); }
     .proj-icon.cor { background:rgba(251,146,60,0.07); border:1px solid rgba(251,146,60,0.18); }
     .proj-title { font-family:var(--serif); font-size:27px; font-weight:400; line-height:1.1; color:var(--text); margin-bottom:12px; }
     .proj-title em { font-style:italic; }
-    .proj-title.vio em { color:var(--accent); }
+    .proj-title.vio em { color:var(--purple); }
     .proj-title.cor em { color:var(--orange); }
     .proj-desc { font-size:13.5px; color:var(--muted); line-height:1.76; flex:1; margin-bottom:26px; }
     .proj-foot { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
@@ -293,6 +294,62 @@
     .about-pull { font-family:var(--serif); font-style:italic; font-size:clamp(24px,3vw,34px); line-height:1.3; color:var(--text); letter-spacing:-0.01em; margin-bottom:24px; }
     .about-pull em { color:var(--blue-mid); }
     .about-prose { font-size:15px; color:var(--muted); line-height:1.84; }
+
+    /* ─── EDUCATION ─── */
+    .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding-bottom: 14px; }
+
+    .edu-school {
+      background: var(--surface); border: 1px solid var(--border2); border-radius: 20px;
+      padding: 40px 40px 36px; position: relative; overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    .edu-school::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background: linear-gradient(90deg, var(--blue) 0%, var(--accent) 100%);
+    }
+    .edu-badge {
+      display:inline-flex; align-items:center; gap:8px;
+      background:rgba(74,140,255,0.1); border:1px solid rgba(74,140,255,0.2);
+      border-radius:100px; padding:5px 14px 5px 10px; margin-bottom:22px;
+    }
+    .edu-badge-dot { width:5px; height:5px; border-radius:50%; background:var(--blue); }
+    .edu-badge span { font-family:var(--mono); font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--blue); }
+
+    .edu-school-name { font-family:var(--serif); font-size:30px; line-height:1.1; color:var(--text); margin-bottom:10px; }
+    .edu-school-name em { font-style:italic; color:var(--blue-mid); }
+    .edu-degree { font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:0.04em; margin-bottom:22px; line-height:1.6; }
+
+    .edu-timeline {
+      display:flex; align-items:center; gap:10px; margin-top:auto;
+      font-family:var(--mono); font-size:10px;
+    }
+    .edu-timeline-bar {
+      flex:1; height:4px; background:var(--bg2); border-radius:2px; overflow:hidden;
+    }
+    .edu-timeline-fill {
+      height:100%; width:33%; background:linear-gradient(to right,var(--blue),var(--accent));
+      border-radius:2px; animation:barGrow 1.2s ease forwards; transform:scaleX(0);
+    }
+    .edu-tl-start { color:var(--ghost); }
+    .edu-tl-end   { color:var(--green); }
+
+    .edu-certs { background: var(--surface); border: 1px solid var(--border2); border-radius: 20px; padding: 40px 40px 36px; }
+    .edu-certs-lbl { font-family:var(--mono); font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ghost); margin-bottom:22px; }
+
+    .cert-list { display:flex; flex-direction:column; gap:9px; }
+    .cert-row {
+      display:flex; align-items:center; gap:12px;
+      background:var(--bg2); border:1px solid var(--border); border-radius:10px;
+      padding:10px 14px;
+      transition:border-color 0.2s,background 0.2s;
+    }
+    .cert-row:hover { border-color:rgba(74,140,255,0.25); background:rgba(74,140,255,0.05); }
+    .cert-icon {
+      width:28px; height:28px; border-radius:8px; display:flex; align-items:center;
+      justify-content:center; flex-shrink:0; font-size:13px;
+    }
+    .cert-name { font-family:var(--mono); font-size:11px; color:var(--muted); flex:1; }
+    .cert-check { font-size:11px; color:var(--green); }
 
     /* ─── CONTACT ─── */
     .contact-section { border-top:1px solid var(--border); padding:72px 0 88px; }
@@ -329,6 +386,7 @@
       .feat-panel{border-top:1px solid var(--border);}
       .feat-left{padding:32px 28px;}
       .feat-finding{flex-direction:column;align-items:flex-start;padding:20px 28px;}
+      .edu-grid{grid-template-columns:1fr;}
       .proj-grid{grid-template-columns:1fr;}
       .about-grid{grid-template-columns:1fr;gap:32px;}
       footer{padding:22px 24px;}
@@ -383,8 +441,8 @@
 
       <div class="hero-right">
         <div class="hstat-card">
-          <div class="hstat-val green" id="stat-n-hero">18</div>
-          <div class="hstat-lbl">Datasets<br/>Analyzed</div>
+          <div class="hstat-val green" id="stat-n-hero">8</div>
+          <div class="hstat-lbl">Technical<br/>Certifications</div>
         </div>
         <div class="hstat-card">
           <div class="hstat-val">0.87</div>
@@ -493,9 +551,9 @@
         <div class="proj-num">PROJECT 02</div>
         <div class="proj-icon vio">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <rect x="2" y="4" width="16" height="2.5" rx="1" fill="#6366F1" opacity="0.5"/>
-            <rect x="2" y="9" width="12" height="2.5" rx="1" fill="#6366F1" opacity="0.75"/>
-            <rect x="2" y="14" width="7" height="2.5" rx="1" fill="#6366F1"/>
+            <rect x="2" y="4" width="16" height="2.5" rx="1" fill="#9763f1" opacity="0.5"/>
+            <rect x="2" y="9" width="12" height="2.5" rx="1" fill="#9763f1" opacity="0.75"/>
+            <rect x="2" y="14" width="7" height="2.5" rx="1" fill="#9763f1"/>
           </svg>
         </div>
         <h3 class="proj-title vio">No<em>Code</em>SQL</h3>
@@ -534,6 +592,80 @@
       </div>
     </div>
 
+    <!-- EDUCATION -->
+    <div id="education">
+      <div class="sec-head">
+        <span class="lbl">Education</span>
+        <div class="hr"></div>
+      </div>
+    </div>
+
+    <div class="edu-grid">
+      <div class="edu-school">
+        <div class="edu-badge"><div class="edu-badge-dot"></div><span>Currently Enrolled</span></div>
+        <div class="edu-school-name">Mesa Community<br/><em>College</em></div>
+        <div class="edu-degree">
+          B.S. Data Analytics &amp; Programming<br/>
+          Expected graduation · 2028
+        </div>
+        <div style="height:1px;background:var(--border);margin:22px 0;"></div>
+        <div class="edu-timeline">
+          <span class="edu-tl-start">2025</span>
+          <div class="edu-timeline-bar"><div class="edu-timeline-fill"></div></div>
+          <span class="edu-tl-end">2028 ✓</span>
+        </div>
+
+        <div style="height:1px;background:var(--border);margin:26px 0 22px;"></div>
+
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+          <div style="width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 6px rgba(34,197,94,0.7);"></div>
+          <span style="font-family:var(--mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--green);">Graduated</span>
+        </div>
+        <div class="edu-school-name" style="font-size:22px;">EVIT — <em>Software &amp; App Design</em></div>
+        <div class="edu-degree" style="margin-bottom:0;">East Valley Institute of Technology<br/>Class of 2025–2026</div>
+      </div>
+
+      <div class="edu-certs">
+        <div class="edu-certs-lbl">Technical Certifications</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;margin-top:-10px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ghost)"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+          <span style="font-family:var(--mono);font-size:9px;letter-spacing:0.12em;color:var(--ghost);">Issued by Pearson</span>
+        </div>
+        <div class="cert-list">
+          <div class="cert-row">
+            <div class="cert-icon" style="background:rgba(74,140,255,0.1);">🐍</div>
+            <span class="cert-name">Python Programming</span>
+            <span class="cert-check">✓</span>
+          </div>
+          <div class="cert-row">
+            <div class="cert-icon" style="background:rgba(34,197,94,0.1);">📊</div>
+            <span class="cert-name">Data Analytics</span>
+            <span class="cert-check">✓</span>
+          </div>
+          <div class="cert-row">
+            <div class="cert-icon" style="background:rgba(99,102,241,0.1);">🗄️</div>
+            <span class="cert-name">Databases &amp; SQL</span>
+            <span class="cert-check">✓</span>
+          </div>
+          <div class="cert-row">
+            <div class="cert-icon" style="background:rgba(251,146,60,0.1);">☁️</div>
+            <span class="cert-name">Cloud Computing</span>
+            <span class="cert-check">✓</span>
+          </div>
+          <div class="cert-row">
+            <div class="cert-icon" style="background:rgba(177,99,241,0.1);">🤖</div>
+            <span class="cert-name">Artificial Intelligence</span>
+            <span class="cert-check">✓</span>
+          </div>
+          <div class="cert-row">
+            <div class="cert-icon" style="background:rgba(74,140,255,0.08);">🌐</div>
+            <span class="cert-name">HTML &amp; CSS</span>
+            <span class="cert-check">✓</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ABOUT -->
     <div id="about">
       <div class="sec-head" style="padding-top:72px;">
@@ -546,22 +678,21 @@
       <div>
         <div class="about-kv-lbl">Aaron Mairel</div>
         <div class="kv"><div class="k">Focus</div><div class="v">Data Analytics</div></div>
+        <div class="kv"><div class="k">School</div><div class="v">Mesa Community College</div></div>
+        <div class="kv"><div class="k">Degree</div><div class="v">B.S. Data Analytics<br/>&amp; Programming</div></div>
         <div class="kv"><div class="k">Location</div><div class="v">Phoenix, AZ</div></div>
-        <div class="kv"><div class="k">Status</div><div class="v">Student & Builder</div></div>
+        <div class="kv"><div class="k">Status</div><div class="v">Student &amp; Builder</div></div>
         <div class="kv" style="margin-top:28px;">
           <div class="k">Stack</div>
           <div class="v">Python · Pandas · SQL<br/>Selenium · BeautifulSoup<br/>Matplotlib · CustomTkinter</div>
         </div>
       </div>
       <div>
-        <p class="about-pull">I gravitate toward problems where <em>messy data</em> meets a decision someone actually needs to make.</p>
+        <p class="about-pull">I'm a data analytics student who builds things <em>between classes</em> — not as homework, but because the problems are real.</p>
         <p class="about-prose">
-          My work falls into two categories: market research tools that surface what the numbers are really saying,
-          and accessibility tools that remove technical friction for people who have better things to do than learn SQL.
-          I'm precise by habit and curious by default — which means I'll go twelve layers deep into a depreciation dataset
-          before calling a finding reliable.
+          My projects come from genuine frustration: used car pricing that nobody explains clearly, SQL that gatekeeps data from the people who need it, arbitrage opportunities buried in noise. I build tools to fix those specific things — scrapers, dashboards, visual interfaces — and I finish them.
           <br/><br/>
-          Outside the data, I think a lot about how to make analytical work legible to the people who need it most.
+          I'm studying Data Analytics &amp; Programming at Mesa Community College, where certifications in Python, databases, cloud, and AI give me a foundation. But most of what I know came from sitting with a problem until I understood it well enough to build something useful. I'm precise about methodology — I won't call a finding reliable until I've stress-tested it — and I care just as much about making the output readable as getting the numbers right.
         </p>
       </div>
     </div>
@@ -631,10 +762,8 @@
       if (!delta) return;
       n += delta;
       const el  = document.getElementById('stat-n');
-      const elH = document.getElementById('stat-n-hero');
       const dl  = document.getElementById('stat-d');
       if (el)  el.textContent  = n.toLocaleString();
-      if (elH) elH.textContent = n.toLocaleString();
       if (dl)  dl.textContent  = `▲ ${delta} just now`;
     }, 7000);
   </script>
